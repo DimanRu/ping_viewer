@@ -1,0 +1,9 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/PingViewer/PingViewer/bin/Debug/net6.0-windows
+/PingViewer/.vs
+/PingViewer/PingViewer/obj
+/.vs/ping_viewer/v17
+/.vs
