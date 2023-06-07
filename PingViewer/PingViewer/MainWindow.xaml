@@ -5,13 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PingViewer"
         xmlns:viewModel="clr-namespace:PingViewer.ViewModel"
+        xmlns:converters="clr-namespace:PingViewer.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" SizeToContent="Height" Width="200">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <converters:IPStatusToColorConverter x:Key="StatusConverter"/>
+    </Window.Resources>
     <Grid>
-        <Button Content="Button" x:Name="button1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="147*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="+" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding NewResourceRelayCommand}" Margin="1,1,1,1"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding Resources}" HorizontalContentAlignment="Stretch" Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Address}"/>
+                            <TextBlock Text="{Binding Path=Status}" Foreground="{Binding Status, Converter={StaticResource StatusConverter}}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="1"  Content="X" Margin="10,0,0,0" Command="{Binding Path=DataContext.RemoveResource, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding Path=.}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>
