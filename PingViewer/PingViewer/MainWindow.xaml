@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:PingViewer.ViewModel"
         xmlns:converters="clr-namespace:PingViewer.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="Height" Width="200">
+        SizeToContent="Height" AllowsTransparency="True" Width="200" WindowStyle="None" Activated="Window_Activated" Deactivated="Window_Deactivated">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -34,7 +34,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
                             <TextBlock Text="{Binding Path=Address}"/>
-                            <TextBlock Text="{Binding Path=Status}" Foreground="{Binding Status, Converter={StaticResource StatusConverter}}" Margin="10,0,0,0"/>
+                            <TextBlock Text="{Binding Path=Status}" FontWeight="Medium" Foreground="{Binding Status, Converter={StaticResource StatusConverter}}" Margin="10,0,0,0"/>
                         </StackPanel>
                         <Button Grid.Column="1"  Content="X" Margin="10,0,0,0" Command="{Binding Path=DataContext.RemoveResource, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding Path=.}"/>
                     </Grid>

@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Threading;
 using System.Security.Policy;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace PingViewer.ViewModel
 {
@@ -63,12 +64,21 @@ namespace PingViewer.ViewModel
             }
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        async private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
+            Ping pingSender = new Ping();
             foreach (var res in Resources)
             {
-                Ping pingSender = new Ping();
-                res.Status = pingSender.SendPingAsync(res.Address).Result.Status;
+                try
+                {
+                    await Task.Run(() => {
+                        res.Status = pingSender.SendPingAsync(res.Address).Result.Status; 
+                    });
+                }
+                catch
+                {
+                    res.Status = IPStatus.BadRoute;
+                }
             }
         }
     }

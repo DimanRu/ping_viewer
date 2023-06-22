@@ -18,7 +18,7 @@ namespace PingViewer.Converters
             return (IPStatus)value switch
             {
                 IPStatus.Unknown => new SolidColorBrush(Color.FromRgb(80, 80, 80)),
-                IPStatus.Success => new SolidColorBrush(Color.FromRgb(170, 255, 128)),
+                IPStatus.Success => new SolidColorBrush(Color.FromRgb(0, 153, 0)),
                 _ => new SolidColorBrush(Color.FromRgb(255, 64, 25))
             };
         }

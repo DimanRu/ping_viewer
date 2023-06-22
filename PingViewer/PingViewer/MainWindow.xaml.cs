@@ -19,5 +19,15 @@ namespace PingViewer
         {
             InitializeComponent();
         }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            this.Opacity = 1;
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            this.Opacity = 0.5;
+        }
     }
 }
