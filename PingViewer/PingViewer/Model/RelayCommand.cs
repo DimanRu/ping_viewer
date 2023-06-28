@@ -8,7 +8,7 @@ namespace PingViewer
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;
 
-        public event EventHandler CanExecuteChanged
+        public event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
@@ -20,14 +20,15 @@ namespace PingViewer
             this.canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
             return this.canExecute == null || this.CanExecute(parameter);
         }
 
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
-            this.execute(parameter);
+            if (parameter != null)
+                this.execute(parameter);
         }
     }
 }

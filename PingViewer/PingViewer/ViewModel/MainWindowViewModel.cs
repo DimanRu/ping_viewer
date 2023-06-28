@@ -10,14 +10,14 @@ using System.Windows.Threading;
 using System.Security.Policy;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PingViewer.ViewModel
 {
     class MainViewModel : NotifyPropertyChanged
     {
 
-        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-
+        private DispatcherTimer dispatcherTimer;
         private ObservableCollection<Resource> _resources;
         public ObservableCollection<Resource> Resources
         {
@@ -32,9 +32,7 @@ namespace PingViewer.ViewModel
         public MainViewModel()
         {
             Resources = new ObservableCollection<Resource>();
-            Resources.Add(new Resource("www.mail.ru"));
-            Resources.Add(new Resource("www.ya.ru"));
-
+            dispatcherTimer = new DispatcherTimer(); 
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
@@ -63,6 +61,17 @@ namespace PingViewer.ViewModel
                 });
             }
         }
+        public RelayCommand CloseApp
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    if (obj != null)
+                        ((Window)obj).Close();
+                });
+            }
+        }
 
         async private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -71,8 +80,9 @@ namespace PingViewer.ViewModel
             {
                 try
                 {
-                    await Task.Run(() => {
-                        res.Status = pingSender.SendPingAsync(res.Address).Result.Status; 
+                    await Task.Run(() =>
+                    {
+                        res.Status = pingSender.SendPingAsync(res.Address).Result.Status;
                     });
                 }
                 catch

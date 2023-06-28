@@ -7,7 +7,7 @@ namespace PingViewer
     public class NotifyPropertyChanged : INotifyPropertyChanged
     {
         [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName = "")
         {
